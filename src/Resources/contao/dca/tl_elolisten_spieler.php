@@ -435,7 +435,7 @@ $GLOBALS['TL_DCA']['tl_elolisten_spieler'] = array
 /**
  * Provide miscellaneous methods that are used by the data configuration array
  */
-class tl_elo extends Backend
+class tl_elolisten_spieler extends Backend
 {
 	 
 	/**

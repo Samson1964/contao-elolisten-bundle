@@ -1,5 +1,9 @@
 # FIDE-Elo-Listen Changelog
 
+## Version 0.0.4 (2022-10-27)
+
+* Fix: Bug in dca/tl_elolisten_spieler -> falscher Klassenname
+
 ## Version 0.0.3 (2022-10-27)
 
 * Fix: Bug in dca/tl_elolisten_spieler
