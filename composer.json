@@ -27,7 +27,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Schachbulle\\ContaoEloBundle\\": "src/"
+            "Schachbulle\\ContaoElolistenBundle\\": "src/"
         }
     },
     "support": {
