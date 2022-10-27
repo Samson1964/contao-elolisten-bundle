@@ -468,7 +468,7 @@ class tl_elo extends Backend
 		}
 		
 		// Check permissions AFTER checking the tid, so hacking attempts are logged
-		if (!$this->User->isAdmin && !$this->User->hasAccess('tl_elo::published', 'alexf'))
+		if (!$this->User->isAdmin && !$this->User->hasAccess('tl_elolisten_spieler::published', 'alexf'))
 		{
 			return '';
 		}
@@ -491,9 +491,9 @@ class tl_elo extends Backend
 	public function toggleVisibility($intId, $blnPublished)
 	{
 		// Check permissions to publish
-		if (!$this->User->isAdmin && !$this->User->hasAccess('tl_elo::published', 'alexf'))
+		if (!$this->User->isAdmin && !$this->User->hasAccess('tl_elolisten_spieler::published', 'alexf'))
 		{
-			$this->log('Not enough permissions to show/hide record ID "'.$intId.'"', 'tl_elo toggleVisibility', TL_ERROR);
+			$this->log('Not enough permissions to show/hide record ID "'.$intId.'"', 'tl_elolisten_spieler toggleVisibility', TL_ERROR);
 			$this->redirect('contao/main.php?act=error');
 		}
 		
@@ -510,7 +510,7 @@ class tl_elo extends Backend
 		}
 		
 		// Update the database
-		$this->Database->prepare("UPDATE tl_elo SET tstamp=". time() .", published='" . ($blnPublished ? '' : '1') . "' WHERE id=?")
+		$this->Database->prepare("UPDATE tl_elolisten_spieler SET tstamp=". time() .", published='" . ($blnPublished ? '' : '1') . "' WHERE id=?")
 		               ->execute($intId);
 		$this->createNewVersion('tl_elolisten_spieler', $intId);
 	}
