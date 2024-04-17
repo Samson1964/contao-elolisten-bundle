@@ -14,26 +14,21 @@ $GLOBALS['TL_LANG']['tl_elolisten']['publish_legend'] = 'Veröffentlichung';
 $GLOBALS['TL_LANG']['tl_elolisten']['published'] = array('Veröffentlicht', 'Liste aktivieren oder deaktivieren');
 
 /**
+ * Buttons für globale Operationen
+ */
+
+$GLOBALS['TL_LANG']['tl_elolisten']['spieler'] = array('Spieler verwalten', 'Spieler-Verwaltung aufrufen');
+
+/**
  * Buttons für Operationen
  */
 
-$GLOBALS['TL_LANG']['tl_elolisten']['new'][0] = 'Neue Liste';
-$GLOBALS['TL_LANG']['tl_elolisten']['new'][1] = 'Neue Liste anlegen';
-
-$GLOBALS['TL_LANG']['tl_elolisten']['edit'][0] = 'Spieler der Liste bearbeiten';
-$GLOBALS['TL_LANG']['tl_elolisten']['edit'][1] = 'Spieler der Liste %s bearbeiten';
-
-$GLOBALS['TL_LANG']['tl_elolisten']['editheader'][0] = 'Liste bearbeiten';
-$GLOBALS['TL_LANG']['tl_elolisten']['editheader'][1] = 'Liste %s bearbeiten';
-
-$GLOBALS['TL_LANG']['tl_elolisten']['copy'][0] = 'Liste kopieren';
-$GLOBALS['TL_LANG']['tl_elolisten']['copy'][1] = 'Liste %s kopieren';
-
-$GLOBALS['TL_LANG']['tl_elolisten']['delete'][0] = 'Liste löschen';
-$GLOBALS['TL_LANG']['tl_elolisten']['delete'][1] = 'Liste %s löschen';
-
-$GLOBALS['TL_LANG']['tl_elolisten']['toggle'][0] = 'Liste aktivieren/deaktivieren';
-$GLOBALS['TL_LANG']['tl_elolisten']['toggle'][1] = 'Liste %s aktivieren/deaktivieren';
-
-$GLOBALS['TL_LANG']['tl_elolisten']['show'][0] = 'Listendetails anzeigen';
-$GLOBALS['TL_LANG']['tl_elolisten']['show'][1] = 'Details des Listen %s anzeigen';
+$GLOBALS['TL_LANG']['tl_elolisten']['new'] = array('Neue Elo-Liste', 'Neue Elo-Liste anlegen');
+$GLOBALS['TL_LANG']['tl_elolisten']['edit'] = array('Spieler der Liste bearbeiten', 'Spieler der Liste %s bearbeiten');
+$GLOBALS['TL_LANG']['tl_elolisten']['editheader'] = array('Liste bearbeiten', 'Liste %s bearbeiten');
+$GLOBALS['TL_LANG']['tl_elolisten']['copy'] = array('Liste kopieren', 'Liste %s kopieren');
+$GLOBALS['TL_LANG']['tl_elolisten']['delete'] = array('Liste löschen', 'Liste %s löschen');
+$GLOBALS['TL_LANG']['tl_elolisten']['toggle'] = array('Liste aktivieren/deaktivieren', 'Liste %s aktivieren/deaktivieren');
+$GLOBALS['TL_LANG']['tl_elolisten']['show'] = array('Listendetails anzeigen', 'Details des Listen %s anzeigen');
+// Zusätzliche Funktionen
+$GLOBALS['TL_LANG']['tl_elolisten']['import'] = array('FIDE-Daten in Liste %s importieren', 'Import von FIDE-Daten in die Liste %s');
