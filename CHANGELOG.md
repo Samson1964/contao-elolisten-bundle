@@ -2,8 +2,8 @@
 
 ## Version 0.1.0 (2024-04-17)
 
-* Add: Abhängigkeit codefog/contao-haste
-* Add: PHP-8-Unterstützung
+* Add: AbhÃ¤ngigkeit codefog/contao-haste
+* Add: PHP-8-UnterstÃ¼tzung
 * Add: Haste-Toggler
 
 ## Version 0.0.4 (2022-10-27)
