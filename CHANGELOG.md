@@ -1,5 +1,9 @@
 # FIDE-Elo-Listen Changelog
 
+## Version 0.1.1 (2026-07-29)
+
+* Fix: Warning: Undefined array key "deleteConfirm", "importConfirm" bei contao:migrate -> Lesezugriffe auf $GLOBALS['TL_LANG'] in den DCA-Dateien mit `?? null` bzw. `?? array()` abgesichert, da der DcaLoader die Sprachdateien noch nicht geladen hat
+
 ## Version 0.1.0 (2024-04-17)
 
 * Add: Abhängigkeit codefog/contao-haste
