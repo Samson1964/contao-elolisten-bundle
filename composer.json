@@ -1,7 +1,15 @@
 {
     "name": "schachbulle/contao-elolisten-bundle",
     "type": "contao-bundle",
-    "description": "Verwaltung von Elo-Zahlen für Contao 4",
+    "description": "Gibt FIDE-Elo-Listen als Bestenliste, Top-Liste und Statistik im Frontend aus.",
+    "keywords": [
+        "contao",
+        "schach",
+        "elo",
+        "fide",
+        "bestenliste"
+    ],
+    "homepage": "https://github.com/Samson1964/contao-elolisten-bundle",
     "license": "LGPL-3.0-or-later",
     "authors": [
         {
