@@ -4,6 +4,14 @@ services:
         autoconfigure: true
         public: false
 
-    # Das Bundle registriert derzeit keine eigenen Services. Die Datei bleibt
-    # bestehen, damit die Extension sie laden kann und der Import beim
-    # Nachrüsten des FIDE-XML-Imports nur noch ergänzt werden muss.
+    # Backend-Controller des FIDE-XML-Imports.
+    #
+    # Contao holt die Klasse in Backend::getBackendModule() über
+    # System::importStatic() — das prüft zuerst den Service-Container und greift
+    # nur dann auf "new" zurück. Der Dienst muss deshalb öffentlich sein und
+    # seine Service-ID dem Klassennamen entsprechen, damit die Abhängigkeiten
+    # per Konstruktor hineinkommen statt über statische Contao-Aufrufe.
+    Schachbulle\ContaoElolistenBundle\Classes\FideImport:
+        public: true
+        arguments:
+            $projektVerzeichnis: '%kernel.project_dir%'

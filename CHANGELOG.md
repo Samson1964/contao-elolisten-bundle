@@ -1,5 +1,13 @@
 # FIDE-Elo-Listen Changelog
 
+## Version 0.3.0 (2026-07-31)
+
+* Add: FIDE-XML-Import als Operation an der einzelnen Liste (`key=import`). Übernommen werden ausschließlich Spieler mit der Länderkennung GER; vorhandene Spieler der Liste werden anhand der FIDE-ID überschrieben und Spieler, die in der Importdatei fehlen, gelöscht. Andere Listen bleiben unberührt
+* Add: Der Import nimmt die gezippte Ratingliste der FIDE entgegen (ca. 50 MB statt 835 MB) und entpackt sie serverseitig
+* Add: Upload und Import laufen in kleinen Schritten über AJAX, damit die rund 1,9 Millionen Datensätze der Weltrangliste nicht an Zeit- oder Speichergrenzen scheitern
+* Add: Dokumentation des Imports in `docs/import.md`, README um eine vollständige Anleitung erweitert
+* Add: Unit-Tests für die Auswertung eines `<player>`-Blocks (`tests/`, PHPUnit 9)
+
 ## Version 0.2.0 (2026-07-31)
 
 * Add: Unterstützung für Contao 5 (getestet mit 5.7.7), Contao 4.13 bleibt unterstützt
