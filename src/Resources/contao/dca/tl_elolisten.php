@@ -1,27 +1,32 @@
 <?php
 
-/**
- * Contao Open Source CMS
+declare(strict_types=1);
+
+/*
+ * Dieses Bundle verwaltet FIDE-Elo-Listen in Contao 4.13 und Contao 5.
  *
- * Copyright (c) 2005-2015 Leo Feyer
- *
- * @package   Elo
- * @author    Frank Hoppe
- * @license   GNU/LPGL
- * @copyright Frank Hoppe 2016
+ * @license LGPL-3.0-or-later
  */
 
+use Contao\DC_Table;
+use Schachbulle\ContaoElolistenBundle\ContaoElolistenBundle;
 
 /**
- * Table tl_elolisten
+ * Tabelle tl_elolisten
+ *
+ * Eine Elo-Liste entspricht einer Monatsliste der FIDE. Die zugehörigen
+ * Spieler liegen in tl_elolisten_spieler und verweisen über das Feld "pid"
+ * auf den hier verwalteten Datensatz.
  */
 $GLOBALS['TL_DCA']['tl_elolisten'] = array
 (
 
-	// Config
+	// Konfiguration
 	'config' => array
 	(
-		'dataContainer'                 => 'Table',
+		// Contao 5 erwartet den vollqualifizierten Klassennamen; Contao 4.13 versteht
+		// ihn seit 4.9 ebenfalls und verwarnt umgekehrt den Kurznamen "Table"
+		'dataContainer'                 => DC_Table::class,
 		'enableVersioning'              => true,
 		'sql' => array
 		(
@@ -32,111 +37,39 @@ $GLOBALS['TL_DCA']['tl_elolisten'] = array
 		)
 	),
 
-	// List
+	// Datensätze auflisten
 	'list' => array
 	(
 		'sorting' => array
 		(
-			'mode'                      => 1,
+			'mode'                      => 1, // DataContainer::MODE_SORTED
 			'fields'                    => array('datum'),
 			'panelLayout'               => 'filter,sort;search,limit',
-			'flag'                      => 12,
+			'flag'                      => 12, // DataContainer::SORT_MONTH_DESC
 			'disableGrouping'           => true,
 		),
 		'label' => array
 		(
 			'fields'                    => array('id', 'listmonth', 'datum', 'title'),
 			'showColumns'               => true,
-			//'label_callback'          => array('tl_elolisten', 'convertDate')
 		),
-		'global_operations' => array
-		(
-			'spieler' => array
-			(
-				'label'               => &$GLOBALS['TL_LANG']['tl_elolisten']['spieler'],
-				'href'                => 'table=tl_elolisten_spieler',
-				'icon'                => 'bundles/contaoelolisten/images/spieler.png',
-				'attributes'          => 'onclick="Backend.getScrollOffset();"'
-			),
-			'all' => array
-			(
-				'label'                 => &$GLOBALS['TL_LANG']['MSC']['all'],
-				'href'                  => 'act=select',
-				'class'                 => 'header_edit_all',
-				'attributes'            => 'onclick="Backend.getScrollOffset();" accesskey="e"'
-			)
-		),
-		'operations' => array
-		(
-			'edit' => array
-			(
-				'label'                 => &$GLOBALS['TL_LANG']['tl_elolisten']['edit'],
-				'href'                  => 'table=tl_elo',
-				'icon'                  => 'edit.gif',
-			),
-			'editheader' => array
-			(
-				'label'                 => &$GLOBALS['TL_LANG']['tl_elolisten']['editheader'],
-				'href'                  => 'act=edit',
-				'icon'                  => 'header.gif',
-			),
-			'copy' => array
-			(
-				'label'                 => &$GLOBALS['TL_LANG']['tl_elolisten']['copy'],
-				'href'                  => 'act=copy',
-				'icon'                  => 'copy.gif'
-			),
-			'delete' => array
-			(
-				'label'                 => &$GLOBALS['TL_LANG']['tl_elolisten']['delete'],
-				'href'                  => 'act=delete',
-				'icon'                  => 'delete.gif',
-				'attributes'            => 'onclick="if(!confirm(\'' . ($GLOBALS['TL_LANG']['MSC']['deleteConfirm'] ?? null) . '\'))return false;Backend.getScrollOffset()"'
-			),
-			'toggle' => array
-			(
-				'label'                => &$GLOBALS['TL_LANG']['tl_elolisten']['toggle'],
-				'attributes'           => 'onclick="Backend.getScrollOffset()"',
-				'haste_ajax_operation' => array
-				(
-					'field'            => 'published',
-					'options'          => array
-					(
-						array('value' => '', 'icon' => 'invisible.svg'),
-						array('value' => '1', 'icon' => 'visible.svg'),
-					),
-				),
-			),
-			'show' => array
-			(
-				'label'                 => &$GLOBALS['TL_LANG']['tl_elolisten']['show'],
-				'href'                  => 'act=show',
-				'icon'                  => 'show.gif'
-			),
-			'import' => array
-			(
-				'label'               => &$GLOBALS['TL_LANG']['tl_elolisten']['import'],
-				'href'                => 'key=import',
-				'icon'                => 'bundles/contaoelolisten/images/import.png',
-				'attributes'          => 'onclick="if (!confirm(\'' . ($GLOBALS['TL_LANG']['tl_elolisten']['importConfirm'] ?? null) . '\')) return false; Backend.getScrollOffset();"'
-			), 
-		)
+		// global_operations und operations werden weiter unten versionsabhängig gesetzt
 	),
 
-	// Palettes
+	// Paletten
 	'palettes' => array
 	(
 		'__selector__'                  => array(''),
 		'default'                       => '{title_legend},listmonth,title,datum;{publish_legend},published'
 	),
 
-	// Subpalettes
+	// Unterpaletten
 	'subpalettes' => array
 	(
 		''                              => ''
 	),
 
-	// Fields
+	// Felder
 	'fields' => array
 	(
 		'id' => array
@@ -170,7 +103,7 @@ $GLOBALS['TL_DCA']['tl_elolisten'] = array
 			'filter'                    => true,
 			'search'                    => true,
 			'inputType'                 => 'text',
-			'flag'                      => 8,
+			'flag'                      => 8, // DataContainer::SORT_MONTH_ASC
 			'eval'                      => array
 			(
 				'rgxp'                  => 'date',
@@ -189,7 +122,7 @@ $GLOBALS['TL_DCA']['tl_elolisten'] = array
 			'filter'                    => true,
 			'search'                    => true,
 			'inputType'                 => 'text',
-			'flag'                      => 11,
+			'flag'                      => 11, // DataContainer::SORT_YEAR_DESC
 			'eval'                      => array
 			(
 				'mandatory'             => true,
@@ -201,36 +134,126 @@ $GLOBALS['TL_DCA']['tl_elolisten'] = array
 		'published' => array
 		(
 			'label'                     => &$GLOBALS['TL_LANG']['tl_elolisten']['published'],
+			'toggle'                    => true, // Aktiviert den Contao-eigenen Schnellschalter in der Übersicht
 			'exclude'                   => true,
 			'search'                    => false,
 			'sorting'                   => false,
 			'filter'                    => true,
 			'inputType'                 => 'checkbox',
-			'eval'                      => array('tl_class' => 'w50','isBoolean' => true),
+			'eval'                      => array('tl_class' => 'w50', 'isBoolean' => true),
 			'sql'                       => "char(1) NOT NULL default ''"
 		),
 	)
 );
 
-
-/**
- * Class tl_elolisten
- *
- * Provide miscellaneous methods that are used by the data configuration array.
- * @copyright  Leo Feyer 2005-2014
- * @author     Leo Feyer <https://contao.org>
- * @package    News
+/*
+ * Operationen versionsabhängig setzen: Contao 5 kennt die Kurzschreibweise, bei
+ * der Label und Icon aus dem Kern stammen, Contao 4.13 benötigt vollständige
+ * Arrays. Der Toggler läuft in beiden Versionen über das Contao-eigene
+ * "act=toggle"; die frühere Umsetzung über codefog/contao-haste ist entfallen,
+ * weil Haste nicht für Contao 5 verfügbar ist.
  */
-class tl_elolisten extends Backend
+if (ContaoElolistenBundle::isContao5())
 {
+	$GLOBALS['TL_DCA']['tl_elolisten']['list']['global_operations'] = array
+	(
+		'spieler' => array
+		(
+			'href'                => 'table=tl_elolisten_spieler',
+			'icon'                => 'bundles/contaoelolisten/images/spieler.png',
+		),
+		'all'
+	);
 
-	/**
-	 * Import the back end user object
-	 */
-	public function __construct()
-	{
-		parent::__construct();
-		$this->import('BackendUser', 'User');
-	}
+	$GLOBALS['TL_DCA']['tl_elolisten']['list']['operations'] = array
+	(
+		'edit' => array
+		(
+			'href'                => 'table=tl_elolisten_spieler',
+			'icon'                => 'edit.svg',
+		),
+		'editheader' => array
+		(
+			'href'                => 'act=edit',
+			'icon'                => 'header.svg',
+		),
+		'copy',
+		'delete',
+		'toggle',
+		'show',
+		'import' => array
+		(
+			'href'                => 'key=import',
+			'icon'                => 'bundles/contaoelolisten/images/import.png',
+			'attributes'          => 'onclick="if (!confirm(\''.($GLOBALS['TL_LANG']['tl_elolisten']['importConfirm'] ?? '').'\')) return false; Backend.getScrollOffset();"'
+		),
+	);
+}
+else
+{
+	$GLOBALS['TL_DCA']['tl_elolisten']['list']['global_operations'] = array
+	(
+		'spieler' => array
+		(
+			'label'               => &$GLOBALS['TL_LANG']['tl_elolisten']['spieler'],
+			'href'                => 'table=tl_elolisten_spieler',
+			'icon'                => 'bundles/contaoelolisten/images/spieler.png',
+			'attributes'          => 'onclick="Backend.getScrollOffset();"'
+		),
+		'all' => array
+		(
+			'label'               => &$GLOBALS['TL_LANG']['MSC']['all'],
+			'href'                => 'act=select',
+			'class'               => 'header_edit_all',
+			'attributes'          => 'onclick="Backend.getScrollOffset();" accesskey="e"'
+		)
+	);
 
+	$GLOBALS['TL_DCA']['tl_elolisten']['list']['operations'] = array
+	(
+		'edit' => array
+		(
+			'label'               => &$GLOBALS['TL_LANG']['tl_elolisten']['edit'],
+			'href'                => 'table=tl_elolisten_spieler',
+			'icon'                => 'edit.svg',
+		),
+		'editheader' => array
+		(
+			'label'               => &$GLOBALS['TL_LANG']['tl_elolisten']['editheader'],
+			'href'                => 'act=edit',
+			'icon'                => 'header.svg',
+		),
+		'copy' => array
+		(
+			'label'               => &$GLOBALS['TL_LANG']['tl_elolisten']['copy'],
+			'href'                => 'act=copy',
+			'icon'                => 'copy.svg'
+		),
+		'delete' => array
+		(
+			'label'               => &$GLOBALS['TL_LANG']['tl_elolisten']['delete'],
+			'href'                => 'act=delete',
+			'icon'                => 'delete.svg',
+			'attributes'          => 'onclick="if(!confirm(\''.($GLOBALS['TL_LANG']['MSC']['deleteConfirm'] ?? '').'\'))return false;Backend.getScrollOffset()"'
+		),
+		'toggle' => array
+		(
+			'label'               => &$GLOBALS['TL_LANG']['tl_elolisten']['toggle'],
+			'href'                => 'act=toggle&amp;field=published',
+			'icon'                => 'visible.svg'
+		),
+		'show' => array
+		(
+			'label'               => &$GLOBALS['TL_LANG']['tl_elolisten']['show'],
+			'href'                => 'act=show',
+			'icon'                => 'show.svg'
+		),
+		'import' => array
+		(
+			'label'               => &$GLOBALS['TL_LANG']['tl_elolisten']['import'],
+			'href'                => 'key=import',
+			'icon'                => 'bundles/contaoelolisten/images/import.png',
+			'attributes'          => 'onclick="if (!confirm(\''.($GLOBALS['TL_LANG']['tl_elolisten']['importConfirm'] ?? '').'\')) return false; Backend.getScrollOffset();"'
+		),
+	);
 }

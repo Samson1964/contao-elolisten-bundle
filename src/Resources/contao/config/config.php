@@ -1,60 +1,22 @@
 <?php
 
-/**
- * Contao Open Source CMS
+declare(strict_types=1);
+
+/*
+ * Dieses Bundle verwaltet FIDE-Elo-Listen in Contao 4.13 und Contao 5.
  *
- * Copyright (c) 2005-2015 Leo Feyer
- *
- * @package   Elo
- * @author    Frank Hoppe
- * @license   GNU/LPGL
- * @copyright Frank Hoppe 2016
+ * @license LGPL-3.0-or-later
  */
 
-
-/**
- * BACK END MODULES
+/*
+ * Backend-Modul
  *
- * Back end modules are stored in a global array called "BE_MOD". You can add
- * your own modules by adding them to the array.
- *
- * Not all of the keys mentioned above (like "tables", "key", "callback" etc.)
- * have to be set. Take a look at the system/modules/core/config/config.php
- * file to see how back end modules are configured.
- */
-
-/**
- * Backend-Module
+ * Beide Tabellen gehören zum selben Modul, damit die globalen Operationen
+ * "Spieler verwalten" und "Elo-Listen verwalten" zwischen ihnen wechseln
+ * können; Contao lässt nur Tabellen zu, die im Modul eingetragen sind.
  */
 $GLOBALS['BE_MOD']['content']['elolisten'] = array
 (
 	'tables'                  => array('tl_elolisten', 'tl_elolisten_spieler'),
 	'icon'                    => 'bundles/contaoelolisten/images/icon.png'
 );
-
-
-/**
- * Frontend-Module
- */
-
-//$GLOBALS['FE_MOD']['elo'] = array
-//(
-//	'elo_toplist'             => 'Schachbulle\ContaoEloBundle\Classes\Elo',
-//	'elo_bestlist'            => 'Schachbulle\ContaoEloBundle\Classes\Bestenliste',
-//	'elo_topx'                => 'Schachbulle\ContaoEloBundle\Classes\TopX',
-//	'elo_statistik'           => 'Schachbulle\ContaoEloBundle\Classes\Statistik',
-//);
-
-/**
- * Inhaltselemente
- */
-
-//$GLOBALS['TL_CTE']['schach']['eloliste'] = 'Schachbulle\ContaoEloBundle\ContentElements\EloArchiv'; 
-
-/**
- * -------------------------------------------------------------------------
- * Voreinstellungen
- * -------------------------------------------------------------------------
- */
- 
-//$GLOBALS['TL_CONFIG']['eloliste_cachetime'] = 30;

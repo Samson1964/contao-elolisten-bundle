@@ -1,27 +1,32 @@
 <?php
 
-/**
- * Contao Open Source CMS
+declare(strict_types=1);
+
+/*
+ * Dieses Bundle verwaltet FIDE-Elo-Listen in Contao 4.13 und Contao 5.
  *
- * Copyright (c) 2005-2015 Leo Feyer
- *
- * @package   Elo
- * @author    Frank Hoppe
- * @license   GNU/LPGL
- * @copyright Frank Hoppe 2016
+ * @license LGPL-3.0-or-later
  */
 
+use Contao\DC_Table;
+use Schachbulle\ContaoElolistenBundle\ContaoElolistenBundle;
 
 /**
- * Table tl_elo
+ * Tabelle tl_elolisten_spieler
+ *
+ * Ein Datensatz entspricht einem Spieler einer FIDE-Monatsliste. Die Felder
+ * bilden die Spalten der FIDE-XML-Datei ab; "pid" verweist auf die Liste in
+ * tl_elolisten, zu der der Spieler gehört.
  */
 $GLOBALS['TL_DCA']['tl_elolisten_spieler'] = array
 (
 
-	// Config
+	// Konfiguration
 	'config' => array
 	(
-		'dataContainer'             => 'Table',
+		// Contao 5 erwartet den vollqualifizierten Klassennamen; Contao 4.13 versteht
+		// ihn seit 4.9 ebenfalls und verwarnt umgekehrt den Kurznamen "Table"
+		'dataContainer'             => DC_Table::class,
 		'enableVersioning'          => true,
 		'sql' => array
 		(
@@ -42,18 +47,16 @@ $GLOBALS['TL_DCA']['tl_elolisten_spieler'] = array
 		)
 	),
 
-	// List
+	// Datensätze auflisten
 	'list' => array
 	(
 		'sorting' => array
 		(
-			'mode'                    => 1,
+			'mode'                    => 1, // DataContainer::MODE_SORTED
 			'fields'                  => array('surname'),
-			'flag'                    => 1,
-			'headerFields'            => array('title', 'datum'), 
+			'flag'                    => 1, // DataContainer::SORT_INITIAL_LETTER_ASC
+			'headerFields'            => array('title', 'datum'),
 			'panelLayout'             => 'sort,filter;search,limit',
-			//'child_record_callback'   => array('tl_elolisten_spieler', 'listPlayers'),
-			//'child_record_class'      => 'no_padding',
 		),
 		'label' => array
 		(
@@ -61,93 +64,23 @@ $GLOBALS['TL_DCA']['tl_elolisten_spieler'] = array
 			'showColumns'             => true,
 			'format'                  => '%s'
 		),
-		'global_operations' => array
-		(
-			'listen' => array
-			(
-				'label'               => &$GLOBALS['TL_LANG']['tl_elolisten_spieler']['listen'],
-				'href'                => 'table=tl_elolisten',
-				'icon'                => 'bundles/contaoelolisten/images/listen.png',
-				'attributes'          => 'onclick="Backend.getScrollOffset();"'
-			),
-			'all' => array
-			(
-				'label'               => &$GLOBALS['TL_LANG']['MSC']['all'],
-				'href'                => 'act=select',
-				'class'               => 'header_edit_all',
-				'attributes'          => 'onclick="Backend.getScrollOffset();" accesskey="e"'
-			)
-		),
-		'operations' => array
-		(
-			'edit' => array
-			(
-				'label'               => &$GLOBALS['TL_LANG']['tl_elolisten_spieler']['edit'],
-				'href'                => 'act=edit',
-				'icon'                => 'edit.gif'
-			),
-			'copy' => array
-			(
-				'label'               => &$GLOBALS['TL_LANG']['tl_elolisten_spieler']['copy'],
-				'href'                => 'act=copy',
-				'icon'                => 'copy.gif'
-			),
-			'delete' => array
-			(
-				'label'               => &$GLOBALS['TL_LANG']['tl_elolisten_spieler']['delete'],
-				'href'                => 'act=delete',
-				'icon'                => 'delete.gif',
-				'attributes'          => 'onclick="if(!confirm(\'' . ($GLOBALS['TL_LANG']['MSC']['deleteConfirm'] ?? null) . '\'))return false;Backend.getScrollOffset()"'
-			),
-			'toggle' => array
-			(
-				'label'                => &$GLOBALS['TL_LANG']['tl_elolisten_spieler']['toggle'],
-				'attributes'           => 'onclick="Backend.getScrollOffset()"',
-				'haste_ajax_operation' => array
-				(
-					'field'            => 'published',
-					'options'          => array
-					(
-						array('value' => '', 'icon' => 'invisible.svg'),
-						array('value' => '1', 'icon' => 'visible.svg'),
-					),
-				),
-			),
-			'show' => array
-			(
-				'label'               => &$GLOBALS['TL_LANG']['tl_elolisten_spieler']['show'],
-				'href'                => 'act=show',
-				'icon'                => 'show.gif'
-			)
-		)
+		// global_operations und operations werden weiter unten versionsabhängig gesetzt
 	),
 
-	// Select
-	'select' => array
-	(
-		'buttons_callback' => array()
-	),
-
-	// Edit
-	'edit' => array
-	(
-		'buttons_callback' => array()
-	),
-
-	// Palettes
+	// Paletten
 	'palettes' => array
 	(
 		'__selector__'                => array(''),
 		'default'                     => '{name_legend},surname,prename,intent,birthday,sex,country;{fide_legend},fideid,title,w_title,o_title,foa_title;{flag_legend},flag,rapid_flag,blitz_flag;{elo_legend},rating,games,rapid_rating,rapid_games,blitz_rating,blitz_games;{publish_legend},published'
 	),
 
-	// Subpalettes
+	// Unterpaletten
 	'subpalettes' => array
 	(
 		''                            => ''
 	),
 
-	// Fields
+	// Felder
 	'fields' => array
 	(
 		'id' => array
@@ -169,7 +102,7 @@ $GLOBALS['TL_DCA']['tl_elolisten_spieler'] = array
 			'inputType'               => 'text',
 			'eval'                    => array
 			(
-				'mandatory'           => false, 
+				'mandatory'           => false,
 				'maxlength'           => 16,
 				'tl_class'            => 'w50'
 			),
@@ -183,7 +116,7 @@ $GLOBALS['TL_DCA']['tl_elolisten_spieler'] = array
 			'inputType'               => 'text',
 			'eval'                    => array
 			(
-				'mandatory'           => false, 
+				'mandatory'           => false,
 				'maxlength'           => 64,
 				'tl_class'            => 'w50'
 			),
@@ -197,7 +130,7 @@ $GLOBALS['TL_DCA']['tl_elolisten_spieler'] = array
 			'inputType'               => 'text',
 			'eval'                    => array
 			(
-				'mandatory'           => false, 
+				'mandatory'           => false,
 				'maxlength'           => 64,
 				'tl_class'            => 'w50'
 			),
@@ -210,7 +143,7 @@ $GLOBALS['TL_DCA']['tl_elolisten_spieler'] = array
 			'inputType'               => 'text',
 			'eval'                    => array
 			(
-				'mandatory'           => false, 
+				'mandatory'           => false,
 				'maxlength'           => 16,
 				'tl_class'            => 'w50'
 			),
@@ -223,7 +156,7 @@ $GLOBALS['TL_DCA']['tl_elolisten_spieler'] = array
 			'inputType'               => 'text',
 			'eval'                    => array
 			(
-				'mandatory'           => false, 
+				'mandatory'           => false,
 				'maxlength'           => 3,
 				'tl_class'            => 'w50'
 			),
@@ -236,7 +169,7 @@ $GLOBALS['TL_DCA']['tl_elolisten_spieler'] = array
 			'inputType'               => 'text',
 			'eval'                    => array
 			(
-				'mandatory'           => false, 
+				'mandatory'           => false,
 				'maxlength'           => 1,
 				'tl_class'            => 'w50'
 			),
@@ -250,7 +183,7 @@ $GLOBALS['TL_DCA']['tl_elolisten_spieler'] = array
 			'inputType'               => 'text',
 			'eval'                    => array
 			(
-				'mandatory'           => false, 
+				'mandatory'           => false,
 				'maxlength'           => 3,
 				'tl_class'            => 'w50 clr'
 			),
@@ -264,7 +197,7 @@ $GLOBALS['TL_DCA']['tl_elolisten_spieler'] = array
 			'inputType'               => 'text',
 			'eval'                    => array
 			(
-				'mandatory'           => false, 
+				'mandatory'           => false,
 				'maxlength'           => 3,
 				'tl_class'            => 'w50'
 			),
@@ -278,7 +211,7 @@ $GLOBALS['TL_DCA']['tl_elolisten_spieler'] = array
 			'inputType'               => 'text',
 			'eval'                    => array
 			(
-				'mandatory'           => false, 
+				'mandatory'           => false,
 				'maxlength'           => 3,
 				'tl_class'            => 'w50'
 			),
@@ -292,7 +225,7 @@ $GLOBALS['TL_DCA']['tl_elolisten_spieler'] = array
 			'inputType'               => 'text',
 			'eval'                    => array
 			(
-				'mandatory'           => false, 
+				'mandatory'           => false,
 				'maxlength'           => 3,
 				'tl_class'            => 'w50'
 			),
@@ -305,7 +238,7 @@ $GLOBALS['TL_DCA']['tl_elolisten_spieler'] = array
 			'inputType'               => 'text',
 			'eval'                    => array
 			(
-				'mandatory'           => false, 
+				'mandatory'           => false,
 				'maxlength'           => 8,
 				'tl_class'            => 'w50'
 			),
@@ -318,7 +251,7 @@ $GLOBALS['TL_DCA']['tl_elolisten_spieler'] = array
 			'inputType'               => 'text',
 			'eval'                    => array
 			(
-				'mandatory'           => false, 
+				'mandatory'           => false,
 				'maxlength'           => 8,
 				'tl_class'            => 'w50 clr'
 			),
@@ -331,7 +264,7 @@ $GLOBALS['TL_DCA']['tl_elolisten_spieler'] = array
 			'inputType'               => 'text',
 			'eval'                    => array
 			(
-				'mandatory'           => false, 
+				'mandatory'           => false,
 				'maxlength'           => 8,
 				'tl_class'            => 'w50 clr'
 			),
@@ -344,7 +277,7 @@ $GLOBALS['TL_DCA']['tl_elolisten_spieler'] = array
 			'inputType'               => 'text',
 			'eval'                    => array
 			(
-				'mandatory'           => false, 
+				'mandatory'           => false,
 				'maxlength'           => 4,
 				'tl_class'            => 'w50'
 			),
@@ -357,7 +290,7 @@ $GLOBALS['TL_DCA']['tl_elolisten_spieler'] = array
 			'inputType'               => 'text',
 			'eval'                    => array
 			(
-				'mandatory'           => false, 
+				'mandatory'           => false,
 				'maxlength'           => 4,
 				'tl_class'            => 'w50'
 			),
@@ -370,7 +303,7 @@ $GLOBALS['TL_DCA']['tl_elolisten_spieler'] = array
 			'inputType'               => 'text',
 			'eval'                    => array
 			(
-				'mandatory'           => false, 
+				'mandatory'           => false,
 				'maxlength'           => 4,
 				'tl_class'            => 'w50'
 			),
@@ -383,7 +316,7 @@ $GLOBALS['TL_DCA']['tl_elolisten_spieler'] = array
 			'inputType'               => 'text',
 			'eval'                    => array
 			(
-				'mandatory'           => false, 
+				'mandatory'           => false,
 				'maxlength'           => 4,
 				'tl_class'            => 'w50'
 			),
@@ -396,7 +329,7 @@ $GLOBALS['TL_DCA']['tl_elolisten_spieler'] = array
 			'inputType'               => 'text',
 			'eval'                    => array
 			(
-				'mandatory'           => false, 
+				'mandatory'           => false,
 				'maxlength'           => 4,
 				'tl_class'            => 'w50'
 			),
@@ -409,7 +342,7 @@ $GLOBALS['TL_DCA']['tl_elolisten_spieler'] = array
 			'inputType'               => 'text',
 			'eval'                    => array
 			(
-				'mandatory'           => false, 
+				'mandatory'           => false,
 				'maxlength'           => 4,
 				'tl_class'            => 'w50'
 			),
@@ -422,7 +355,7 @@ $GLOBALS['TL_DCA']['tl_elolisten_spieler'] = array
 			'inputType'               => 'text',
 			'eval'                    => array
 			(
-				'mandatory'           => false, 
+				'mandatory'           => false,
 				'maxlength'           => 8,
 				'tl_class'            => 'w50'
 			),
@@ -431,6 +364,7 @@ $GLOBALS['TL_DCA']['tl_elolisten_spieler'] = array
 		'published' => array
 		(
 			'label'                   => &$GLOBALS['TL_LANG']['tl_elolisten_spieler']['published'],
+			'toggle'                  => true, // Aktiviert den Contao-eigenen Schnellschalter in der Übersicht
 			'exclude'                 => true,
 			'search'                  => false,
 			'sorting'                 => false,
@@ -442,44 +376,90 @@ $GLOBALS['TL_DCA']['tl_elolisten_spieler'] = array
 				'isBoolean'           => true
 			),
 			'sql'                     => "char(1) NOT NULL default ''"
-		), 
+		),
 	)
 );
 
-/**
- * Provide miscellaneous methods that are used by the data configuration array
+/*
+ * Operationen versionsabhängig setzen: Contao 5 kennt die Kurzschreibweise, bei
+ * der Label und Icon aus dem Kern stammen, Contao 4.13 benötigt vollständige
+ * Arrays. Der Toggler läuft in beiden Versionen über das Contao-eigene
+ * "act=toggle"; die frühere Umsetzung über codefog/contao-haste ist entfallen,
+ * weil Haste nicht für Contao 5 verfügbar ist.
  */
-class tl_elolisten_spieler extends Backend
+if (ContaoElolistenBundle::isContao5())
 {
-	 
-	/**
-	 * Import the back end user object
-	 */
-	public function __construct()
-	{
-		parent::__construct();
-		$this->import('BackendUser', 'User');
-	}
+	$GLOBALS['TL_DCA']['tl_elolisten_spieler']['list']['global_operations'] = array
+	(
+		'listen' => array
+		(
+			'href'                => 'table=tl_elolisten',
+			'icon'                => 'bundles/contaoelolisten/images/listen.png',
+		),
+		'all'
+	);
 
-	/**
-	 * Generiere eine Zeile als HTML
-	 * @param array
-	 * @return string
-	 */
-	public function listPlayers($arrRow)
-	{
-		$line = '';
-		$line .= '<div>';
-		$line .= $arrRow['surname'];
-		if($arrRow['prename']) $line .= ', '.$arrRow['prename'];
-		if($arrRow['intent']) $line .= ', '.$arrRow['intent'];
-		if($arrRow['rating']) $line .= ' - Elo '.$arrRow['rating'];
-		if($arrRow['blitz_rating']) $line .= ' - Blitz '.$arrRow['blitz_rating'];
-		if($arrRow['rapid_rating']) $line .= ' - Rapid '.$arrRow['rapid_rating'];
-		$line .= "</div>";
-		$line .= "\n";
-		return($line);
-	
-	}
+	$GLOBALS['TL_DCA']['tl_elolisten_spieler']['list']['operations'] = array
+	(
+		'edit',
+		'copy',
+		'delete',
+		'toggle',
+		'show'
+	);
+}
+else
+{
+	$GLOBALS['TL_DCA']['tl_elolisten_spieler']['list']['global_operations'] = array
+	(
+		'listen' => array
+		(
+			'label'               => &$GLOBALS['TL_LANG']['tl_elolisten_spieler']['listen'],
+			'href'                => 'table=tl_elolisten',
+			'icon'                => 'bundles/contaoelolisten/images/listen.png',
+			'attributes'          => 'onclick="Backend.getScrollOffset();"'
+		),
+		'all' => array
+		(
+			'label'               => &$GLOBALS['TL_LANG']['MSC']['all'],
+			'href'                => 'act=select',
+			'class'               => 'header_edit_all',
+			'attributes'          => 'onclick="Backend.getScrollOffset();" accesskey="e"'
+		)
+	);
 
+	$GLOBALS['TL_DCA']['tl_elolisten_spieler']['list']['operations'] = array
+	(
+		'edit' => array
+		(
+			'label'               => &$GLOBALS['TL_LANG']['tl_elolisten_spieler']['edit'],
+			'href'                => 'act=edit',
+			'icon'                => 'edit.svg'
+		),
+		'copy' => array
+		(
+			'label'               => &$GLOBALS['TL_LANG']['tl_elolisten_spieler']['copy'],
+			'href'                => 'act=copy',
+			'icon'                => 'copy.svg'
+		),
+		'delete' => array
+		(
+			'label'               => &$GLOBALS['TL_LANG']['tl_elolisten_spieler']['delete'],
+			'href'                => 'act=delete',
+			'icon'                => 'delete.svg',
+			'attributes'          => 'onclick="if(!confirm(\''.($GLOBALS['TL_LANG']['MSC']['deleteConfirm'] ?? '').'\'))return false;Backend.getScrollOffset()"'
+		),
+		'toggle' => array
+		(
+			'label'               => &$GLOBALS['TL_LANG']['tl_elolisten_spieler']['toggle'],
+			'href'                => 'act=toggle&amp;field=published',
+			'icon'                => 'visible.svg'
+		),
+		'show' => array
+		(
+			'label'               => &$GLOBALS['TL_LANG']['tl_elolisten_spieler']['show'],
+			'href'                => 'act=show',
+			'icon'                => 'show.svg'
+		)
+	);
 }

@@ -1,0 +1,9 @@
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+        public: false
+
+    # Das Bundle registriert derzeit keine eigenen Services. Die Datei bleibt
+    # bestehen, damit die Extension sie laden kann und der Import beim
+    # Nachrüsten des FIDE-XML-Imports nur noch ergänzt werden muss.

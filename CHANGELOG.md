@@ -1,5 +1,21 @@
 # FIDE-Elo-Listen Changelog
 
+## Version 0.2.0 (2026-07-31)
+
+* Add: Unterstützung für Contao 5 (getestet mit 5.7.7), Contao 4.13 bleibt unterstützt
+* Add: `declare(strict_types=1)` und deutsche Kommentarblöcke in allen PHP-Dateien
+* Change: PHP-Anforderung auf `^7.4 || ^8.0` angehoben, die Unterstützung für PHP 5.6 und 7.0 bis 7.3 entfällt
+* Change: Der Veröffentlichungs-Schalter in beiden Listen läuft jetzt über das Contao-eigene `act=toggle` statt über `haste_ajax_operation`
+* Change: Operationsleisten werden versionsabhängig aufgebaut, da Contao 5 die Kurzschreibweise erwartet und Contao 4.13 vollständige Arrays
+* Change: `dataContainer` verwendet den vollqualifizierten Klassennamen `Contao\DC_Table`, den Contao 4.13 seit 4.9 ebenfalls versteht
+* Change: Operations-Icons von `.gif` auf `.svg` umgestellt, da Contao die GIF-Varianten nicht mehr ausliefert
+* Change: `services.yml` in `services.yaml` umbenannt und der `_instanceof`-Block entfernt, der auf das in Symfony 7 entfallene `ContainerAwareInterface` verwies
+* Remove: Abhängigkeit `codefog/contao-haste`, die für Contao 5 nicht verfügbar ist
+* Remove: Abhängigkeit `schachbulle/contao-helper-bundle`, die im Bundle nirgends verwendet wurde
+* Remove: Die leeren Klassen `tl_elolisten` und `tl_elolisten_spieler` aus den DCA-Dateien; sie erweiterten den in Contao 5 nicht mehr vorhandenen Klassen-Alias `Backend` und wurden von keinem Callback benutzt
+* Fix: Die Operation "Spieler der Liste bearbeiten" verwies auf die nicht existierende Tabelle `tl_elo` statt auf `tl_elolisten_spieler`
+* Fix: Rückfragetext `importConfirm` ergänzt, der bisher in der Sprachdatei fehlte und die Sicherheitsabfrage vor dem Import leer ließ
+
 ## Version 0.1.1 (2026-07-29)
 
 * Fix: Warning: Undefined array key "deleteConfirm", "importConfirm" bei contao:migrate -> Lesezugriffe auf $GLOBALS['TL_LANG'] in den DCA-Dateien mit `?? null` bzw. `?? array()` abgesichert, da der DcaLoader die Sprachdateien noch nicht geladen hat
