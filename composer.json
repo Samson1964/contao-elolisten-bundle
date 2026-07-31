@@ -1,13 +1,14 @@
 {
     "name": "schachbulle/contao-elolisten-bundle",
     "type": "contao-bundle",
-    "description": "Gibt FIDE-Elo-Listen als Bestenliste, Top-Liste und Statistik im Frontend aus.",
+    "description": "Verwaltet beliebig viele FIDE-Elo-Listen mit deutschen Spielern und gibt sie als Bestenliste, Top-Liste und Statistik im Frontend aus.",
     "keywords": [
         "contao",
         "schach",
         "elo",
         "fide",
-        "bestenliste"
+        "bestenliste",
+        "deutschland"
     ],
     "homepage": "https://github.com/Samson1964/contao-elolisten-bundle",
     "license": "LGPL-3.0-or-later",

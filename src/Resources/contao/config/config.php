@@ -11,12 +11,13 @@ declare(strict_types=1);
 /*
  * Backend-Modul
  *
- * Beide Tabellen gehören zum selben Modul, damit die globalen Operationen
- * "Spieler verwalten" und "Elo-Listen verwalten" zwischen ihnen wechseln
- * können; Contao lässt nur Tabellen zu, die im Modul eingetragen sind.
+ * Beide Tabellen gehören zum selben Modul: tl_elolisten_spieler ist die
+ * Kindtabelle von tl_elolisten und wird über die Operation "Spieler der Liste
+ * bearbeiten" geöffnet. Contao lässt dabei nur Tabellen zu, die hier
+ * eingetragen sind.
  */
 $GLOBALS['BE_MOD']['content']['elolisten'] = array
 (
 	'tables'                  => array('tl_elolisten', 'tl_elolisten_spieler'),
-	'icon'                    => 'bundles/contaoelolisten/images/icon.png'
+	'icon'                    => 'bundles/contaoelolisten/images/icon.svg'
 );

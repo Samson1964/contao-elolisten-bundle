@@ -3,6 +3,9 @@
 ## Version 0.2.0 (2026-07-31)
 
 * Add: Unterstützung für Contao 5 (getestet mit 5.7.7), Contao 4.13 bleibt unterstützt
+* Change: `tl_elolisten_spieler` ist jetzt echte Kindtabelle von `tl_elolisten` (`ptable`/`ctable`, Ansichtsmodus 4). Die Spielerliste zeigt nur noch die Spieler der geöffneten Liste, in der Kopfzeile stehen Titel, Monat und Datum der Liste, und Contao löscht die Spieler beim Löschen der Liste mit
+* Change: Die globalen Operationen "Spieler verwalten" und "Elo-Listen verwalten" sind entfallen; der Weg in die Spieler führt über die Operation "Spieler der Liste bearbeiten", der Weg zurück über die Contao-eigene Schaltfläche "Zurück"
+* Change: Icons als SVG im Stil des Contao-Backends statt als PNG; das beseitigt die `exif_read_data(): File not supported`-Meldungen bei jedem Backend-Aufruf. `listen.png` ist ersatzlos entfallen, da die zugehörige Operation nicht mehr existiert
 * Add: `declare(strict_types=1)` und deutsche Kommentarblöcke in allen PHP-Dateien
 * Change: PHP-Anforderung auf `^7.4 || ^8.0` angehoben, die Unterstützung für PHP 5.6 und 7.0 bis 7.3 entfällt
 * Change: Der Veröffentlichungs-Schalter in beiden Listen läuft jetzt über das Contao-eigene `act=toggle` statt über `haste_ajax_operation`

@@ -27,6 +27,9 @@ $GLOBALS['TL_DCA']['tl_elolisten'] = array
 		// Contao 5 erwartet den vollqualifizierten Klassennamen; Contao 4.13 versteht
 		// ihn seit 4.9 ebenfalls und verwarnt umgekehrt den Kurznamen "Table"
 		'dataContainer'                 => DC_Table::class,
+		// Die Spieler sind Kinddatensätze; dadurch löscht Contao sie mit der Liste
+		// mit und die Operation "Spieler der Liste bearbeiten" öffnet die Elternansicht
+		'ctable'                        => array('tl_elolisten_spieler'),
 		'enableVersioning'              => true,
 		'sql' => array
 		(
@@ -157,11 +160,6 @@ if (ContaoElolistenBundle::isContao5())
 {
 	$GLOBALS['TL_DCA']['tl_elolisten']['list']['global_operations'] = array
 	(
-		'spieler' => array
-		(
-			'href'                => 'table=tl_elolisten_spieler',
-			'icon'                => 'bundles/contaoelolisten/images/spieler.png',
-		),
 		'all'
 	);
 
@@ -170,7 +168,7 @@ if (ContaoElolistenBundle::isContao5())
 		'edit' => array
 		(
 			'href'                => 'table=tl_elolisten_spieler',
-			'icon'                => 'edit.svg',
+			'icon'                => 'bundles/contaoelolisten/images/spieler.svg',
 		),
 		'editheader' => array
 		(
@@ -184,7 +182,7 @@ if (ContaoElolistenBundle::isContao5())
 		'import' => array
 		(
 			'href'                => 'key=import',
-			'icon'                => 'bundles/contaoelolisten/images/import.png',
+			'icon'                => 'bundles/contaoelolisten/images/import.svg',
 			'attributes'          => 'onclick="if (!confirm(\''.($GLOBALS['TL_LANG']['tl_elolisten']['importConfirm'] ?? '').'\')) return false; Backend.getScrollOffset();"'
 		),
 	);
@@ -193,13 +191,6 @@ else
 {
 	$GLOBALS['TL_DCA']['tl_elolisten']['list']['global_operations'] = array
 	(
-		'spieler' => array
-		(
-			'label'               => &$GLOBALS['TL_LANG']['tl_elolisten']['spieler'],
-			'href'                => 'table=tl_elolisten_spieler',
-			'icon'                => 'bundles/contaoelolisten/images/spieler.png',
-			'attributes'          => 'onclick="Backend.getScrollOffset();"'
-		),
 		'all' => array
 		(
 			'label'               => &$GLOBALS['TL_LANG']['MSC']['all'],
@@ -215,7 +206,7 @@ else
 		(
 			'label'               => &$GLOBALS['TL_LANG']['tl_elolisten']['edit'],
 			'href'                => 'table=tl_elolisten_spieler',
-			'icon'                => 'edit.svg',
+			'icon'                => 'bundles/contaoelolisten/images/spieler.svg',
 		),
 		'editheader' => array
 		(
@@ -252,7 +243,7 @@ else
 		(
 			'label'               => &$GLOBALS['TL_LANG']['tl_elolisten']['import'],
 			'href'                => 'key=import',
-			'icon'                => 'bundles/contaoelolisten/images/import.png',
+			'icon'                => 'bundles/contaoelolisten/images/import.svg',
 			'attributes'          => 'onclick="if (!confirm(\''.($GLOBALS['TL_LANG']['tl_elolisten']['importConfirm'] ?? '').'\')) return false; Backend.getScrollOffset();"'
 		),
 	);

@@ -14,12 +14,6 @@ $GLOBALS['TL_LANG']['tl_elolisten']['publish_legend'] = 'Veröffentlichung';
 $GLOBALS['TL_LANG']['tl_elolisten']['published'] = array('Veröffentlicht', 'Liste aktivieren oder deaktivieren');
 
 /**
- * Buttons für globale Operationen
- */
-
-$GLOBALS['TL_LANG']['tl_elolisten']['spieler'] = array('Spieler verwalten', 'Spieler-Verwaltung aufrufen');
-
-/**
  * Buttons für Operationen
  */
 

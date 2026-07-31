@@ -37,17 +37,11 @@ $GLOBALS['TL_LANG']['tl_elolisten_spieler']['publish_legend'] = 'Veröffentlichu
 $GLOBALS['TL_LANG']['tl_elolisten_spieler']['published'] = array('Veröffentlicht', 'Spieler aktivieren oder deaktivieren');
 
 /**
- * Buttons für globale Operationen
- */
-
-$GLOBALS['TL_LANG']['tl_elolisten_spieler']['listen'] = array('Elo-Listen verwalten', 'Elo-Listen-Verwaltung aufrufen');
-
-/**
  * Buttons für Operationen
  */
 
-$GLOBALS['TL_LANG']['tl_elolisten_spieler']['new'] = array('Neuer Spieler', 'Neuen Spieler anlegen');
-$GLOBALS['TL_LANG']['tl_elolisten_spieler']['edit'] = array('Spieler der Spieler bearbeiten', 'Spieler der Spieler %s bearbeiten');
+$GLOBALS['TL_LANG']['tl_elolisten_spieler']['new'] = array('Neuer Spieler', 'Neuen Spieler in dieser Liste anlegen');
+$GLOBALS['TL_LANG']['tl_elolisten_spieler']['edit'] = array('Spieler bearbeiten', 'Spieler %s bearbeiten');
 $GLOBALS['TL_LANG']['tl_elolisten_spieler']['editheader'] = array('Spieler bearbeiten', 'Spieler %s bearbeiten');
 $GLOBALS['TL_LANG']['tl_elolisten_spieler']['copy'] = array('Spieler kopieren', 'Spieler %s kopieren');
 $GLOBALS['TL_LANG']['tl_elolisten_spieler']['delete'] = array('Spieler löschen', 'Spieler %s löschen');

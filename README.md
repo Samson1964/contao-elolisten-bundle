@@ -25,8 +25,9 @@ Anschließend die Datenbank aktualisieren (Contao Manager oder
 ## Verwendung ##
 
 Im Backend erscheint unter **Inhalte** das Modul **Elo-Verwaltung**. Dort werden
-die Listen angelegt und über die globale Operation **Spieler verwalten** die
-zugehörigen Spieler gepflegt.
+die Monatslisten angelegt. Die Spieler einer Liste erreicht man über die
+Operation **Spieler der Liste bearbeiten**; sie gehören fest zu dieser Liste und
+werden mit ihr gelöscht.
 
 Eine ausführliche Anleitung folgt, sobald der FIDE-XML-Import und die
 Frontend-Ausgabe fertig sind.

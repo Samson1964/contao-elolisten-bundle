@@ -27,6 +27,9 @@ $GLOBALS['TL_DCA']['tl_elolisten_spieler'] = array
 		// Contao 5 erwartet den vollqualifizierten Klassennamen; Contao 4.13 versteht
 		// ihn seit 4.9 ebenfalls und verwarnt umgekehrt den Kurznamen "Table"
 		'dataContainer'             => DC_Table::class,
+		// Kindtabelle von tl_elolisten: jeder Spieler gehört über "pid" zu genau
+		// einer Monatsliste und wird nur innerhalb dieser Liste angezeigt
+		'ptable'                    => 'tl_elolisten',
 		'enableVersioning'          => true,
 		'sql' => array
 		(
@@ -52,17 +55,20 @@ $GLOBALS['TL_DCA']['tl_elolisten_spieler'] = array
 	(
 		'sorting' => array
 		(
-			'mode'                    => 1, // DataContainer::MODE_SORTED
+			'mode'                    => 4, // DataContainer::MODE_PARENT
 			'fields'                  => array('surname'),
 			'flag'                    => 1, // DataContainer::SORT_INITIAL_LETTER_ASC
-			'headerFields'            => array('title', 'datum'),
+			// Kopfzeile der Elternansicht: Daten der Liste, zu der die Spieler gehören
+			'headerFields'            => array('title', 'listmonth', 'datum'),
 			'panelLayout'             => 'sort,filter;search,limit',
+			'defaultSearchField'      => 'surname',
 		),
+		// In der Elternansicht gibt es keine Spalten; Contao setzt die Zeile aus
+		// "fields" und "format" zusammen, solange kein label_callback gesetzt ist
 		'label' => array
 		(
-			'fields'                  => array('surname', 'prename'),
-			'showColumns'             => true,
-			'format'                  => '%s'
+			'fields'                  => array('surname', 'prename', 'rating'),
+			'format'                  => '%s, %s (Elo %s)'
 		),
 		// global_operations und operations werden weiter unten versionsabhängig gesetzt
 	),
@@ -389,13 +395,10 @@ $GLOBALS['TL_DCA']['tl_elolisten_spieler'] = array
  */
 if (ContaoElolistenBundle::isContao5())
 {
+	// Der Weg zurück zur Listenübersicht läuft in der Elternansicht über die
+	// Schaltfläche "Zurück", die Contao selbst einblendet
 	$GLOBALS['TL_DCA']['tl_elolisten_spieler']['list']['global_operations'] = array
 	(
-		'listen' => array
-		(
-			'href'                => 'table=tl_elolisten',
-			'icon'                => 'bundles/contaoelolisten/images/listen.png',
-		),
 		'all'
 	);
 
@@ -410,15 +413,10 @@ if (ContaoElolistenBundle::isContao5())
 }
 else
 {
+	// Der Weg zurück zur Listenübersicht läuft in der Elternansicht über die
+	// Schaltfläche "Zurück", die Contao selbst einblendet
 	$GLOBALS['TL_DCA']['tl_elolisten_spieler']['list']['global_operations'] = array
 	(
-		'listen' => array
-		(
-			'label'               => &$GLOBALS['TL_LANG']['tl_elolisten_spieler']['listen'],
-			'href'                => 'table=tl_elolisten',
-			'icon'                => 'bundles/contaoelolisten/images/listen.png',
-			'attributes'          => 'onclick="Backend.getScrollOffset();"'
-		),
 		'all' => array
 		(
 			'label'               => &$GLOBALS['TL_LANG']['MSC']['all'],
