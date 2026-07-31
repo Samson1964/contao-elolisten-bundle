@@ -1,7 +1,8 @@
 {
     "name": "schachbulle/contao-elolisten-bundle",
     "type": "contao-bundle",
-    "description": "Verwaltet beliebig viele FIDE-Elo-Listen mit deutschen Spielern und gibt sie als Bestenliste, Top-Liste und Statistik im Frontend aus.",
+    "abandoned": "schachbulle/contao-elo-bundle",
+    "description": "Abgelöst durch schachbulle/contao-elo-bundle. Verwaltet FIDE-Elo-Listen mit deutschen Spielern; die Frontend-Ausgabe fehlt hier und steckt im Nachfolger.",
     "keywords": [
         "contao",
         "schach",

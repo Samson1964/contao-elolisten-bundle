@@ -1,15 +1,16 @@
 # FIDE-Elo-Listen ToDo
 
-## Offene Aufgaben
+## Abgelöst
 
-* Frontend-Ausgabe nachrüsten: Topliste eines Monats, ewige Bestenliste,
-  Toplisten mehrerer Monate und Statistik. Die alten Einträge dafür stehen
-  auskommentiert in der Historie der `config.php` und verweisen auf ein
-  `ContaoEloBundle`, das es nicht mehr gibt. Solange die Ausgabe fehlt,
-  versprechen `composer.json` und `package-metadata.yml` mehr, als das Bundle
-  kann.
-* Import einmal mit der echten `players_list_xml.zip` der FIDE durchspielen
-  (bisher nur mit einer nachgebauten Datei aus 50.000 Spielern verifiziert).
+Dieses Paket wird nicht mehr weiterentwickelt. Nachfolger ist
+**schachbulle/contao-elo-bundle**; die offenen Punkte stehen dort in der
+`TODO.md`.
+
+Hintergrund: Dieses Repo war eine Kopie des Datenteils des Elo-Bundles
+(identische Felder, umbenannte Tabellen) ohne dessen Frontend-Ausgabe. Die hier
+in 0.2.0 und 0.3.0 entstandene Arbeit — Contao-5-Portierung, echte
+Eltern-Kind-Beziehung, SVG-Icons und der FIDE-XML-Import — ist in das
+Elo-Bundle übernommen worden und dort in 3.0.0 enthalten.
 
 ## Erledigt
 

@@ -1,5 +1,9 @@
 # FIDE-Elo-Listen Changelog
 
+## Version 0.3.1 (2026-07-31)
+
+* Change: Das Paket ist als abgelöst gekennzeichnet (`abandoned`). Nachfolger ist `schachbulle/contao-elo-bundle`, das denselben Datenbestand samt XML-Import mitbringt und zusätzlich die Frontend-Ausgabe enthält, die es hier nie gab
+
 ## Version 0.3.0 (2026-07-31)
 
 * Add: FIDE-XML-Import als Operation an der einzelnen Liste (`key=import`). Übernommen werden ausschließlich Spieler mit der Länderkennung GER; vorhandene Spieler der Liste werden anhand der FIDE-ID überschrieben und Spieler, die in der Importdatei fehlen, gelöscht. Andere Listen bleiben unberührt

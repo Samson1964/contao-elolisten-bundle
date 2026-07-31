@@ -1,5 +1,17 @@
 # FIDE-Elo-Listen für Contao
 
+> ## ⚠️ Dieses Paket wird nicht mehr gepflegt
+>
+> Nachfolger ist **[schachbulle/contao-elo-bundle](https://github.com/Samson1964/contao-elo-bundle)**.
+> Dort steckt derselbe Datenbestand samt XML-Import — zusätzlich aber die
+> Frontend-Ausgabe (Toplisten, ewige Bestenliste, Statistik und das
+> Inhaltselement), die es hier nie gab.
+>
+> Dieses Paket war eine Kopie des Datenteils des Elo-Bundles und ist nie
+> produktiv eingesetzt worden. Wer es dennoch installiert hat, wechselt auf das
+> Elo-Bundle; die Tabellen heißen dort `tl_elo_listen` und `tl_elo` statt
+> `tl_elolisten` und `tl_elolisten_spieler`, die Felder sind identisch.
+
 Verwaltet FIDE-Elo-Listen im Contao-Backend. Jede Liste entspricht einer
 Monatsliste der FIDE und enthält die deutschen Spieler mit ihren Wertungszahlen
 für klassisches Schach, Schnellschach und Blitzschach. Die Spieler werden aus der
